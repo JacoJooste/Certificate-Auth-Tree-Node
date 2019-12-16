@@ -17,6 +17,8 @@
 
 package org.forgerock.openam.auth.nodes;
 
+import static org.forgerock.openam.auth.nodes.CertificateCollectorNode.X509_CERTIFICATE;
+
 import org.apache.commons.lang.StringUtils;
 import org.forgerock.json.JsonValue;
 import org.forgerock.openam.annotations.sm.Attribute;
@@ -109,7 +111,7 @@ public class CertificateValidationNode extends AbstractDecisionNode {
 
         @Attribute(order = 1300)
         @Password
-        default char[] userBindPassword() {
+        default char[] userBindPassword() { // TODO this is an optional value, but if it's not given then the tree fails with an NPE
             return new char[]{' '};
         }
 
@@ -154,7 +156,7 @@ public class CertificateValidationNode extends AbstractDecisionNode {
     public Action process(TreeContext context) throws NodeProcessException {
 
         AMLDAPCertStoreParameters ldapParam = null;
-        List<X509Certificate> certs = context.transientState.get("X509Certificate").asList(X509Certificate.class);
+        List<X509Certificate> certs = context.transientState.get(X509_CERTIFICATE).asList(X509Certificate.class);
         X509Certificate theCert = getX509Certificate(certs, logger);
 
         if (config.checkCertificateExpiry()) {

@@ -1,4 +1,22 @@
+/*
+ * The contents of this file are subject to the terms of the Common Development and
+ * Distribution License (the License). You may not use this file except in compliance with the
+ * License.
+ *
+ * You can obtain a copy of the License at legal/CDDLv1.0.txt. See the License for the
+ * specific language governing permission and limitations under the License.
+ *
+ * When distributing Covered Software, include this CDDL Header Notice in each file and include
+ * the License file at legal/CDDLv1.0.txt. If applicable, add the following below the CDDL
+ * Header, with the fields enclosed by brackets [] replaced by your own identifying
+ * information: "Portions copyright [year] [name of copyright owner]".
+ *
+ * Copyright 2019 ForgeRock AS.
+ */
+
 package org.forgerock.openam.auth.nodes;
+
+import static org.forgerock.openam.auth.nodes.CertificateCollectorNode.X509_CERTIFICATE;
 
 import org.apache.commons.lang.StringUtils;
 import org.forgerock.json.JsonValue;
@@ -81,7 +99,7 @@ public class CertificateUserExtractorNode extends AbstractDecisionNode {
     public Action process(TreeContext context) throws NodeProcessException {
 
         JsonValue sharedState = context.sharedState;
-        List<X509Certificate> certs = context.transientState.get("X509Certificate").asList(X509Certificate.class);
+        List<X509Certificate> certs = context.transientState.get(X509_CERTIFICATE).asList(X509Certificate.class);
         X509Certificate theCert = CertificateValidationNode.getX509Certificate(certs, logger);
 
         if (logger.isDebugEnabled()) {

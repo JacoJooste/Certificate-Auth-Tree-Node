@@ -11,7 +11,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Copyright 2017-2018 ForgeRock AS.
+ * Copyright 2017-2019 ForgeRock AS.
  */
 
 package org.forgerock.openam.auth.nodes;
@@ -70,9 +70,9 @@ public class CertificateNodePlugin extends AbstractNodeAmPlugin {
      */
     @Override
     protected Map<String, Iterable<? extends Class<? extends Node>>> getNodesByVersion() {
-        return Collections.singletonMap(CertificateNodePlugin.currentVersion,
-                                        Arrays.asList(CertificateCollectorNode.class, CertificateValidationNode.class,
-                                                      CertificateUserExtractorNode.class));
+        return Collections.singletonMap(CertificateNodePlugin.currentVersion, Arrays.asList(
+                CertificateCollectorNode.class, CertificateValidationNode.class, CertificateUserExtractorNode.class,
+                CertificateSignatureVerifierNode.class, CertificateProofOfPossessionNode.class));
     }
 
     /**
