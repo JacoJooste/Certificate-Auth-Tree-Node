@@ -42,6 +42,8 @@ import com.sun.identity.shared.encode.Base64;
 public class CertificateProofOfPossessionNode extends AbstractDecisionNode {
     private static final String CHALLENGE = "challenge";
     private static final String CHALLENGE_RESPONSE = "challengeResponse";
+    // The callbacks require a default text value for AM to parse the response correctly
+    private static final String DEFAULT_TEXT = "dummy value";
     private static final String CHALLENGE_KEY = "certificate.pop.challenge";
     private static final SecureRandom RANDOM = new SecureRandom();
     private final Logger logger = LoggerFactory.getLogger(CertificateProofOfPossessionNode.class);
@@ -84,9 +86,9 @@ public class CertificateProofOfPossessionNode extends AbstractDecisionNode {
         String randomChallenge = getRandomString();
         context.sharedState.add(CHALLENGE_KEY, randomChallenge);
         context.sharedState.add(X509_CERTIFICATE, certPem);
-        TextInputCallback challengeCallback = new TextInputCallback(CHALLENGE);
+        TextInputCallback challengeCallback = new TextInputCallback(CHALLENGE, DEFAULT_TEXT);
         challengeCallback.setText(randomChallenge);
-        return Action.send(challengeCallback, new TextInputCallback(CHALLENGE_RESPONSE))
+        return Action.send(challengeCallback, new TextInputCallback(CHALLENGE_RESPONSE, DEFAULT_TEXT))
                 .replaceSharedState(context.sharedState.copy()).build();
     }
 

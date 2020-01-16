@@ -116,7 +116,7 @@ public class CertificateCollectorNode implements Node {
         if (collectionMethods.contains(CALLBACK)) {
             return getCertificateFromCallback(context)
                     .map(x509Certificate -> certificatesToAction(singletonList(x509Certificate), context))
-                    .orElseGet(() -> send(new TextInputCallback("certificate")).build());
+                    .orElseGet(() -> send(new TextInputCallback("certificate", "dummy value")).build());
         }
         logger.debug("Certificate was not successfully collected based on node configuration and client request");
         return goTo(CertificateCollectorOutcome.NOT_COLLECTED.name()).build();
